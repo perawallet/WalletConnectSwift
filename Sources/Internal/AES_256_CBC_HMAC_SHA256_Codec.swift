@@ -72,20 +72,20 @@ class AES_256_CBC_HMAC_SHA256_Codec: Codec {
 
     private func encrypt(key: Data, data: Data) throws -> (cipherText: Data, iv: Data) {
         let iv = AES.randomIV(AES.blockSize)
-        let cipher = try AES(key: key.bytes, blockMode: CBC(iv: iv))
-        let cipherText = try cipher.encrypt(data.bytes)
+        let cipher = try AES(key: key.byteArray, blockMode: CBC(iv: iv))
+        let cipherText = try cipher.encrypt(data.byteArray)
         return (Data(cipherText), Data(iv))
     }
 
     private func decrypt(key: Data, data: Data, iv: Data) throws -> Data {
-        let cipher = try AES(key: key.bytes, blockMode: CBC(iv: iv.bytes))
-        let plainText = try cipher.decrypt(data.bytes)
+        let cipher = try AES(key: key.byteArray, blockMode: CBC(iv: iv.byteArray))
+        let plainText = try cipher.decrypt(data.byteArray)
         return Data(plainText)
     }
 
     private func authenticationCode(key: Data, data: Data) throws -> Data {
-        let algo = HMAC(key: key.bytes, variant: .sha2(.sha256))
-        let digest = try algo.authenticate(data.bytes)
+        let algo = HMAC(key: key.byteArray, variant: .sha2(.sha256))
+        let digest = try algo.authenticate(data.byteArray)
         return Data(digest)
     }
 

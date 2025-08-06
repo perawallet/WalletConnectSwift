@@ -12,7 +12,8 @@ class MockCommunicator: Communicator {
     override func listen(on url: WCURL,
                          onConnect: @escaping ((WCURL) -> Void),
                          onDisconnect: @escaping ((WCURL, Error?) -> Void),
-                         onTextReceive: @escaping (String, WCURL) -> Void) {
+                         onTextReceive: @escaping ((String, WCURL) -> Void),
+                         onError: @escaping ((WCURL, Error?) -> Void)) {
         didListen = true
     }
 
